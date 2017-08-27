@@ -1,0 +1,22 @@
+
+// Variables
+@import "variables";
+
+// Bootstrap
+@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+@import "bootswatch";
+
+.note-body {
+  height: 124px;
+  overflow: hidden;
+}
+
+.note-searching {
+  margin: 14px 0;
+}
+
+.notes-info {
+  margin: 14px 0;
+}
+
+@import "sweet-alert";
