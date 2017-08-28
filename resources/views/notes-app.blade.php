@@ -4,7 +4,7 @@
             <h1>My Notes <small>Test task</small></h1>
         </div>
 
-        <button v-if="! formMode" class="btn btn-success" @click="createNote"><span class="glyphicon glyphicon-plus"></span> Create a note</button>
+        <button v-if="! formMode" class="btn btn-primary" @click="createNote"><span class="glyphicon glyphicon-plus"></span> Create a note</button>
 
         <div v-if="formMode" class="form-mode-area">
             <div class="row">

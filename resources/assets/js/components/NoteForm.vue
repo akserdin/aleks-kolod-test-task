@@ -31,8 +31,8 @@
             </div>
         </div>
 
-        <button class="btn btn-success pull-right" @click.prevent="save">Save</button>
-        <button class="btn btn-default pull-right" @click.prevent="$emit('cancel')">Cancel</button>
+        <button class="btn btn-success btn-sm pull-right" @click.prevent="save">Save</button>
+        <button class="btn btn-default btn-sm pull-right" @click.prevent="$emit('cancel')">Cancel</button>
     </form>
 </template>
 
