@@ -14,7 +14,7 @@
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 $factory->define(\App\NoteModel::class, function(Faker\Generator $faker) {
     return [
-        'title' => $faker->sentence(rand(1,3)),
+        'title' => $faker->unique()->sentence(rand(1,3)),
         'body' => $faker->paragraph
     ];
 });
