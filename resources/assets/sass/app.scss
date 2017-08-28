@@ -6,6 +6,19 @@
 @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
 @import "bootswatch";
 
+.note {
+  cursor: pointer;
+
+  &:hover {
+    position: relative;
+    top: -2px;
+  }
+
+  .panel-heading {
+    height: 54px;
+  }
+}
+
 .note-body {
   height: 124px;
   overflow: hidden;
@@ -19,4 +32,15 @@
   margin: 14px 0;
 }
 
+form .btn {
+  margin-left: 4px;
+}
+
 @import "sweet-alert";
+
+.note-show {
+  p {
+    text-align: left;
+    padding: 8px;
+  }
+}

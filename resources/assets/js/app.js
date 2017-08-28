@@ -1,6 +1,8 @@
 require('./bootstrap');
 
 window.Vue = require('vue');
+window.sweetAlert = require('sweetalert');
+window.moment = require('moment');
 
 const SWEETALERT_CONFIG = {
     title: 'Warning',
@@ -11,6 +13,10 @@ const SWEETALERT_CONFIG = {
     confirmButtonText: "Delete",
     closeOnConfirm: true
 };
+
+Vue.component('note', require('./components/Note.vue'));
+Vue.component('note-form', require('./components/NoteForm.vue'));
+Vue.component('paginator', require('./components/Paginator.vue'));
 
 new Vue({
     el: '#notes-app',
@@ -31,14 +37,9 @@ new Vue({
 
         formMode: false,
 
-        formData: {
-            title: '',
-            body: ''
-        },
-
         errors: {}
     },
-    
+
     methods: {
         getNotes() {
             let vm = this;
@@ -51,6 +52,17 @@ new Vue({
             })
                 .then(vm.handleResponse)
                 .catch(vm.handleError);
+        },
+
+        showNote(note) {
+            sweetAlert({
+                title: note.title,
+                text: note.body,
+                customClass: 'note-show',
+                showConfirmButton: false,
+                showCancelButton: true,
+                cancelButtonText: 'Close',
+            });
         },
 
         reset() {
@@ -75,20 +87,6 @@ new Vue({
             }
         },
 
-        prevPage() {
-            let vm = this;
-
-            vm.paginator.current_page--;
-            this.getNotes();
-        },
-
-        nextPage() {
-            let vm = this;
-
-            vm.paginator.current_page++;
-            this.getNotes();
-        },
-
         setPage(pageNum) {
             let vm = this;
 
@@ -99,7 +97,7 @@ new Vue({
         removeNote(index) {
             let vm = this;
 
-            sweetAlert(SWEETALERT_CONFIG, function() {
+            sweetAlert(SWEETALERT_CONFIG, function () {
                 let id = vm.paginator.data[index].id;
 
                 vm.reset();
@@ -113,7 +111,6 @@ new Vue({
         createNote() {
             let vm = this;
 
-            vm.formData = new NoteModel({});
             vm.errors = {};
             vm.formMode = true;
         },
@@ -126,20 +123,20 @@ new Vue({
             vm.search = '';
         },
 
-        saveNote() {
+        saveNote(note) {
             let vm = this;
 
             vm.errors = {};
 
-            axios.post('/note', vm.formData)
-                .then(function() {
+            axios.post('/note', note)
+                .then(function () {
                     vm.formMode = false;
                     vm.getNotes();
                 })
                 .catch(vm.handleError);
         },
 
-        searchForNote: _.debounce(function() {
+        searchForNote: _.debounce(function () {
             let vm = this;
 
             vm.paginator.current_page = 1;
@@ -148,7 +145,7 @@ new Vue({
     },
 
     watch: {
-        search: function(updatedSearch) {
+        search: function (updatedSearch) {
             let vm = this;
 
             if (updatedSearch.length === 0) {
@@ -168,8 +165,3 @@ new Vue({
         this.getNotes();
     }
 });
-
-function NoteModel(data) {
-    this.title = data.title || '';
-    this.body = data.body || '';
-}
